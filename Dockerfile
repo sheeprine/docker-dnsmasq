@@ -18,7 +18,7 @@ RUN touch /var/lib/dnsmasq/hosts
 RUN touch /var/lib/dnsmasq/options
 
 EXPOSE 67/udp
-CMD dnsmasq -k \
+CMD dnsmasq -k -8 - \
     --dhcp-range=$RANGE_START,$RANGE_END,$RANGE_NETMASK,$LEASE_TIME \
     --dhcp-hostsfile=/var/lib/dnsmasq/hosts \
     --dhcp-optsfile=/var/lib/dnsmasq/options \
