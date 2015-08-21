@@ -12,16 +12,21 @@ RUN apt-get install -y --no-install-recommends \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+ADD https://raw.githubusercontent.com/jpetazzo/pipework/master/pipework /usr/bin/
+RUN chmod a+x /usr/bin/pipework
+
 VOLUME /var/lib/dnsmasq
 
 RUN touch /var/lib/dnsmasq/hosts
 RUN touch /var/lib/dnsmasq/options
 
-EXPOSE 67/udp
-CMD dnsmasq -k -8 - \
-    --dhcp-range=$RANGE_START,$RANGE_END,$RANGE_NETMASK,$LEASE_TIME \
-    --dhcp-hostsfile=/var/lib/dnsmasq/hosts \
-    --dhcp-optsfile=/var/lib/dnsmasq/options \
-    --log-dhcp \
-    --dhcp-boot=pxelinux.0,pxeserver,$GATEWAY \
-    --pxe-service=x86PC,"PXE Booting...",pxelinux
+EXPOSE 53/udp
+CMD pipework --wait && \
+    dnsmasq -k -8 - \
+        --interface=eth1 \
+        --dhcp-range=$RANGE_START,$RANGE_END,$RANGE_NETMASK,$LEASE_TIME \
+        --dhcp-hostsfile=/var/lib/dnsmasq/hosts \
+        --dhcp-optsfile=/var/lib/dnsmasq/options \
+        --log-dhcp \
+        --dhcp-boot=pxelinux.0,pxeserver,$GATEWAY \
+        --pxe-service=x86PC,"PXE Booting...",pxelinux
