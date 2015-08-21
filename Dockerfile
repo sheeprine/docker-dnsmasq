@@ -27,5 +27,9 @@ CMD sh -c 'pipework --wait && dnsmasq -k -8 - \
     --dhcp-hostsfile=/var/lib/dnsmasq/hosts \
     --dhcp-optsfile=/var/lib/dnsmasq/options \
     --log-dhcp \
-    --dhcp-boot=pxelinux.0,,$GATEWAY \
-    --pxe-service=x86PC,"PXE Booting...",pxelinux'
+    --dhcp-boot=pxelinux.0 \
+    --pxe-service=x86PC,"PXE Booting...",pxelinux \
+    --enable-tftp \
+    --tftp-root=/var/lib/tftpboot \
+    --tftp-no-blocksize \
+    --tftp-lowercase'
