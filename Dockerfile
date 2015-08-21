@@ -21,7 +21,7 @@ RUN touch /var/lib/dnsmasq/hosts
 RUN touch /var/lib/dnsmasq/options
 
 EXPOSE 53/udp
-CMD sh -c 'pipework --wait && \ dnsmasq -k -8 - \
+CMD sh -c 'pipework --wait && dnsmasq -k -8 - \
     --interface=eth1 \
     --dhcp-range=$RANGE_START,$RANGE_END,$RANGE_NETMASK,$LEASE_TIME \
     --dhcp-hostsfile=/var/lib/dnsmasq/hosts \
