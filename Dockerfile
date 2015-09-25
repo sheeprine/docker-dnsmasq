@@ -13,6 +13,7 @@ RUN apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 ADD https://raw.githubusercontent.com/jpetazzo/pipework/master/pipework /usr/bin/
+ADD entrypoint.sh /
 RUN chmod a+x /usr/bin/pipework
 
 VOLUME /var/lib/dnsmasq
@@ -21,15 +22,4 @@ RUN touch /var/lib/dnsmasq/hosts
 RUN touch /var/lib/dnsmasq/options
 
 EXPOSE 53/udp
-CMD sh -c 'pipework --wait && dnsmasq -k -8 - \
-    --interface=eth1 \
-    --dhcp-range=$RANGE_START,$RANGE_END,$RANGE_NETMASK,$LEASE_TIME \
-    --dhcp-hostsfile=/var/lib/dnsmasq/hosts \
-    --dhcp-optsfile=/var/lib/dnsmasq/options \
-    --log-dhcp \
-    --dhcp-boot=pxelinux.0 \
-    --pxe-service=x86PC,"PXE Booting...",pxelinux \
-    --enable-tftp \
-    --tftp-root=/var/lib/tftpboot \
-    --tftp-no-blocksize \
-    --tftp-lowercase'
+ENTRYPOINT ["/entrypoint.sh"]
