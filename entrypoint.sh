@@ -12,4 +12,4 @@ dnsmasq -k -8 - \
     --enable-tftp \
     --tftp-root=/var/lib/tftpboot \
     --tftp-no-blocksize \
-    --tftp-lowercase'
+    --tftp-lowercase
