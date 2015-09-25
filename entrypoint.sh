@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 pipework --wait
-dnsmasq -k -8 - \
+exec dnsmasq -k -8 - \
     --interface=eth1 \
     --dhcp-range=$RANGE_START,$RANGE_END,$RANGE_NETMASK,$LEASE_TIME \
     --dhcp-hostsfile=/var/lib/dnsmasq/hosts \
