@@ -3,7 +3,7 @@
 pipework --wait
 exec dnsmasq -k -8 - \
     --interface=eth1 \
-    --addn-hosts=/var/lib/dnsmasq/dnshosts
+    --addn-hosts=/var/lib/dnsmasq/dnshosts \
     --dhcp-range=$RANGE_START,$RANGE_END,$RANGE_NETMASK,$LEASE_TIME \
     --dhcp-hostsfile=/var/lib/dnsmasq/hosts \
     --dhcp-optsfile=/var/lib/dnsmasq/options \
