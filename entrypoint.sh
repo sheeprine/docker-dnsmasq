@@ -10,6 +10,7 @@ exec dnsmasq -k -8 - \
     --log-dhcp \
     --dhcp-boot=pxelinux.0 \
     --pxe-service=x86PC,"PXE Booting...",pxelinux \
+    --pxe-service=BC_EFI,"UEFI PXE Booting...",syslinux.efi \
     --enable-tftp \
     --tftp-root=/var/lib/tftpboot \
     --tftp-no-blocksize \
